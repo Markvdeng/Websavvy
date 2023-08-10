@@ -1,0 +1,24 @@
+
+SELECT 
+  segments.date, 
+  segments.product_custom_attribute0, 
+  segments.product_custom_attribute1, 
+  segments.product_custom_attribute2, 
+  segments.product_custom_attribute3, 
+  segments.product_custom_attribute4, 
+  segments.product_title, 
+  campaign.name, 
+  metrics.cost_micros, 
+  metrics.impressions, 
+  metrics.clicks, 
+  metrics.conversions, 
+  metrics.conversions_value, 
+  campaign.advertising_channel_type, 
+  campaign.status 
+FROM shopping_performance_view 
+WHERE 
+  segments.date DURING LAST_30_DAYS 
+  AND campaign.advertising_channel_type = 'PERFORMANCE_MAX' 
+  AND campaign.name REGEXP_MATCH '".*Brand.*"' 
+  AND campaign.status = 'ENABLED' 
+  AND metrics.cost_micros > 0 
